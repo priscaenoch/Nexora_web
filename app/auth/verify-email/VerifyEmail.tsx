@@ -24,21 +24,6 @@ const VerifyEmail = () => {
   const [status, setStatus] = useState<"pending" | "success" | "error">(token ? "pending" : "pending");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Handle auto-verification if token is present
-  useEffect(() => {
-    if (token) {
-      handleVerify(token);
-    }
-  }, [token, handleVerify]);
-
-  // Cooldown timer
-  useEffect(() => {
-    if (cooldown > 0) {
-      const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [cooldown]);
-
   const handleVerify = useCallback(async (verificationToken: string) => {
     setIsVerifying(true);
     setStatus("pending");
@@ -58,6 +43,13 @@ const VerifyEmail = () => {
       setIsVerifying(false);
     }
   }, [router, toast]);
+
+  // Handle auto-verification if token is present
+  useEffect(() => {
+    if (token) {
+      handleVerify(token);
+    }
+  }, [token, handleVerify]);
 
   const handleResend = async () => {
     if (cooldown > 0) return;
