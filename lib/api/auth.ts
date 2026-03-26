@@ -1,5 +1,12 @@
 import { apiClient } from "./interceptors";
-import { LoginResponse, ApiResponse, RegisterRequest, VerifyEmailRequest, ResendEmailRequest, ChangeEmailRequest } from "@/types/api";
+import { 
+  LoginResponse, 
+  ApiResponse, 
+  RegisterRequest, 
+  VerifyEmailRequest, 
+  ResendEmailRequest, 
+  ChangeEmailRequest 
+} from "@/types/api";
 
 export const authApi = {
   login: async (credentials: any): Promise<ApiResponse<LoginResponse>> => {
@@ -10,9 +17,7 @@ export const authApi = {
     return response.data;
   },
 
-  register: async (
-    data: RegisterRequest,
-  ): Promise<ApiResponse<LoginResponse>> => {
+  register: async (data: RegisterRequest): Promise<ApiResponse<LoginResponse>> => {
     const response = await apiClient.post<ApiResponse<LoginResponse>>(
       "/auth/register",
       data,
@@ -29,9 +34,7 @@ export const authApi = {
     return response.data;
   },
 
-  forgotPassword: async (data: {
-    email: string;
-  }): Promise<ApiResponse<void>> => {
+  forgotPassword: async (data: { email: string }): Promise<ApiResponse<void>> => {
     const response = await apiClient.post<ApiResponse<void>>(
       "/users/forgot-password",
       data,
@@ -39,17 +42,14 @@ export const authApi = {
     return response.data;
   },
 
-  resetPassword: async (data: {
-    token: string;
-    password: string;
-  }): Promise<ApiResponse<void>> => {
+  resetPassword: async (data: { token: string; password: string }): Promise<ApiResponse<void>> => {
     const response = await apiClient.post<ApiResponse<void>>(
       "/users/reset-password",
       data,
     );
     return response.data;
   },
-  
+
   verifyEmail: async (data: VerifyEmailRequest): Promise<ApiResponse<void>> => {
     const response = await apiClient.post<ApiResponse<void>>(
       "/auth/verify-email",
