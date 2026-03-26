@@ -1,5 +1,4 @@
 import { useState, forwardRef, InputHTMLAttributes } from "react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
 import PasswordStrengthBar from "./passwordStrengthBar";
 
 interface PasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -11,67 +10,129 @@ interface PasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {
   autoComplete?: string;
 }
 
-const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(function PasswordInput({ label, id, value, onChange, showStrength = false, autoComplete, ...props }, ref) {
-  const [focused, setFocused] = useState(false);
-  const [visible, setVisible] = useState(false);
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "6px", width: "100%" }}>
-      <label
-        htmlFor={id}
-        style={{ fontSize: "13px", fontWeight: "700", color: "#374151", fontFamily: "'Outfit', sans-serif" }}
+const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
+  function PasswordInput(
+    {
+      label,
+      id,
+      value,
+      onChange,
+      showStrength = false,
+      autoComplete,
+      ...props
+    },
+    ref,
+  ) {
+    const [focused, setFocused] = useState(false);
+    const [visible, setVisible] = useState(false);
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "6px",
+          width: "100%",
+        }}
       >
-        {label}
-      </label>
-      <div style={{ position: "relative" }}>
-        <input
-          ref={ref}
-          id={id}
-          type={visible ? "text" : "password"}
-          value={value}
-          onChange={onChange}
-          autoComplete={autoComplete}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
+        <label
+          htmlFor={id}
           style={{
-            width: "100%",
-            padding: "10px 13px",
-            fontSize: "14px",
+            fontSize: "13px",
+            fontWeight: "700",
+            color: "#374151",
             fontFamily: "'Outfit', sans-serif",
-            color: "#1e293b",
-            background: focused ? "#fff" : "#f8fafc",
-            border: focused ? "1.5px solid #1e3a8a" : "1.5px solid #e2e8f0",
-            borderRadius: "8px",
-            outline: "none",
-            boxSizing: "border-box",
-            transition: "border-color 0.18s, background 0.18s, box-shadow 0.18s",
-            boxShadow: focused ? "0 0 0 3px rgba(30,58,138,0.10)" : "none",
-            letterSpacing: "0.12em",
-          }}
-          onMouseEnter={(e) => { if (!focused) e.currentTarget.style.borderColor = "#94a3b8"; }}
-          onMouseLeave={(e) => { if (!focused) e.currentTarget.style.borderColor = "#e2e8f0"; }}
-          {...props}
-        />
-        <button
-          type="button"
-          onClick={() => setVisible((v) => !v)}
-          style={{
-            position: "absolute",
-            right: "10px",
-            top: "50%",
-            transform: "translateY(-50%)",
-            background: "transparent",
-            border: "none",
-            padding: 0,
-            cursor: "pointer",
-            color: "#6b7280",
           }}
         >
-          {visible ? <FiEyeOff size={20} /> : <FiEye size={20} />}
-        </button>
+          {label}
+        </label>
+        <div style={{ position: "relative" }}>
+          <input
+            ref={ref}
+            id={id}
+            type={visible ? "text" : "password"}
+            value={value}
+            onChange={onChange}
+            autoComplete={autoComplete}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            style={{
+              width: "100%",
+              padding: "10px 13px",
+              fontSize: "14px",
+              fontFamily: "'Outfit', sans-serif",
+              color: "#1e293b",
+              background: focused ? "#fff" : "#f8fafc",
+              border: focused ? "1.5px solid #1e3a8a" : "1.5px solid #e2e8f0",
+              borderRadius: "8px",
+              outline: "none",
+              boxSizing: "border-box",
+              transition:
+                "border-color 0.18s, background 0.18s, box-shadow 0.18s",
+              boxShadow: focused ? "0 0 0 3px rgba(30,58,138,0.10)" : "none",
+              letterSpacing: "0.12em",
+            }}
+            onMouseEnter={(e) => {
+              if (!focused) e.currentTarget.style.borderColor = "#94a3b8";
+            }}
+            onMouseLeave={(e) => {
+              if (!focused) e.currentTarget.style.borderColor = "#e2e8f0";
+            }}
+            {...props}
+          />
+          <button
+            type="button"
+            onClick={() => setVisible((v) => !v)}
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "transparent",
+              border: "none",
+              padding: 0,
+              cursor: "pointer",
+              color: "#6b7280",
+            }}
+          >
+            {visible ? (
+              <svg
+                width={20}
+                height={20}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                style={{ color: "#6b7280" }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13.875 18.825C10.275 18.825 8.5 12.825 8.5 6.825C8.5 6.825 8.5 6.825 8.5 12.825C8.5 18.825 10.275 18.825 13.875 18.825M15 12.825C15 11.525 15.225 10.825 15.75 10.825 16.175 10.825 16.825M9 12.825C9 11.525 9.225 10.825 9.75 10.825 9.75 11.525 9 12.825 9.75 13.175 9 13.825 9 16.825"
+                />
+              </svg>
+            ) : (
+              <svg
+                width={20}
+                height={20}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                style={{ color: "#6b7280" }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 12a3 3 0 00-3 3 3 3 0 003-3 3 3 0 003 3m0 6a3 3 0 00-3-3 3 3 0 003 3m0 6a3 3 0 00-3 3 3 3 0 003 3m-3 3a3 3 0 00-3-3 3 3 0 003 3"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
+        {showStrength && <PasswordStrengthBar password={value} />}
       </div>
-      {showStrength && <PasswordStrengthBar password={value} />}
-    </div>
-  );
-});
+    );
+  },
+);
 
 export default PasswordInput;

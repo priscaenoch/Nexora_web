@@ -293,12 +293,12 @@ const ToastItem = forwardRef<HTMLDivElement, ToastProps>(function ToastItem(
     });
   }, []);
 
-  const handleClose = useCallback(() => {
-    setIsLeaving(true);
-    setTimeout(() => {
-      onClose(id);
-    }, 300);
-  }, [id, onClose]);
+  // const handleClose = useCallback(() => {
+  //   setIsLeaving(true);
+  //   setTimeout(() => {
+  //     onClose(id);
+  //   }, 300);
+  // }, [id, onClose]);
 
   // Handle auto-dismiss
   useEffect(() => {
