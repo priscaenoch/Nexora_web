@@ -70,6 +70,10 @@ export const authApi = {
     const response = await apiClient.patch<ApiResponse<void>>(
       "/auth/change-email",
       data,
+
+  refreshToken: async (): Promise<ApiResponse<LoginResponse>> => {
+    const response = await apiClient.post<ApiResponse<LoginResponse>>(
+      "/auth/refresh-token",
     );
     return response.data;
   },
