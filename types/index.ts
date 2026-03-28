@@ -79,6 +79,37 @@ export interface UIActions {
 
 export type UIStore = UIState & UIActions;
 
+// Notification Types
+export type NotificationType = "donation" | "campaign_update" | "admin_message" | "system";
+
+export interface AppNotification {
+  id: string;
+  type: NotificationType;
+  title: string;
+  message: string;
+  read: boolean;
+  createdAt: string;
+  link?: string;
+  metadata?: Record<string, any>;
+}
+
+export interface NotificationState {
+  notifications: AppNotification[];
+  unreadCount: number;
+  isLoading: boolean;
+}
+
+export interface NotificationActions {
+  fetchNotifications: () => Promise<void>;
+  markAsRead: (id: string) => Promise<void>;
+  markAllAsRead: () => Promise<void>;
+  addNotification: (notification: Omit<AppNotification, "id" | "createdAt">) => void;
+  setNotifications: (notifications: AppNotification[]) => void;
+  setLoading: (loading: boolean) => void;
+}
+
+export type NotificationStore = NotificationState & NotificationActions;
+
 // Stellar Types
 export type StellarNetworkType = "testnet" | "public" | "futurenet";
 

@@ -3,15 +3,16 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Search, Bell, ChevronRight } from 'lucide-react';
+import { Menu, Search, ChevronRight } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
+import { NotificationsDropdown } from '@/components/NotificationsDropdown';
 import { cn } from '@/lib/utils';
 
 const ROUTE_LABELS: Record<string, string> = {
   '/dashboard': 'Overview',
   '/dashboard/projects': 'My Projects',
   '/dashboard/donations': 'Donations',
-  '/settings': 'Settings',
+  '/dashboard/settings': 'Settings',
 };
 
 function useBreadcrumbs() {
@@ -24,8 +25,8 @@ function useBreadcrumbs() {
     crumbs.push({ label: 'Overview', href: '/dashboard' });
     const label = ROUTE_LABELS[pathname] ?? toTitleCase(pathname.split('/').pop() ?? '');
     crumbs.push({ label, href: pathname });
-  } else if (pathname.startsWith('/settings')) {
-    crumbs.push({ label: 'Settings', href: '/settings' });
+  } else if (pathname.startsWith('/dashboard/settings')) {
+    crumbs.push({ label: 'Settings', href: '/dashboard/settings' });
   }
 
   return crumbs;
@@ -41,7 +42,6 @@ interface DashboardHeaderProps {
 
 export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
   const [searchValue, setSearchValue] = useState('');
-  const [notifOpen, setNotifOpen] = useState(false);
   const { user } = useAuthStore();
   const crumbs = useBreadcrumbs();
 
@@ -98,65 +98,7 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
         </div>
 
         {/* Notifications */}
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setNotifOpen((v) => !v)}
-            className="relative p-2 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-            aria-label="Notifications"
-            aria-expanded={notifOpen}
-          >
-            <Bell className="w-5 h-5" />
-            {/* Unread badge */}
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#3461f9]" />
-          </button>
-
-          {notifOpen && (
-            <>
-              {/* Close on outside click */}
-              <div
-                className="fixed inset-0 z-10"
-                onClick={() => setNotifOpen(false)}
-                aria-hidden="true"
-              />
-              <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 z-20 overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-                  <span className="text-sm font-semibold text-gray-900">Notifications</span>
-                  <button
-                    type="button"
-                    onClick={() => setNotifOpen(false)}
-                    className="text-xs text-[#3461f9] hover:underline"
-                  >
-                    Mark all read
-                  </button>
-                </div>
-                <div className="divide-y divide-gray-100 max-h-72 overflow-y-auto">
-                  {MOCK_NOTIFICATIONS.map((n) => (
-                    <div
-                      key={n.id}
-                      className={cn(
-                        'px-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer',
-                        !n.read && 'bg-blue-50/40'
-                      )}
-                    >
-                      <p className="text-sm text-gray-900 font-medium">{n.title}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">{n.time}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="px-4 py-3 border-t border-gray-100 text-center">
-                  <button
-                    type="button"
-                    className="text-xs text-[#3461f9] hover:underline font-medium"
-                    onClick={() => setNotifOpen(false)}
-                  >
-                    View all notifications
-                  </button>
-                </div>
-              </div>
-            </>
-          )}
-        </div>
+        <NotificationsDropdown />
 
         {/* User avatar */}
         <div className="flex items-center gap-2">
@@ -173,9 +115,3 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
     </header>
   );
 }
-
-const MOCK_NOTIFICATIONS = [
-  { id: 1, title: 'Your donation to Clean Water Fund was confirmed', time: '2 hours ago', read: false },
-  { id: 2, title: 'Education Initiative reached its funding goal', time: '1 day ago', read: false },
-  { id: 3, title: 'New project matching your interests is live', time: '3 days ago', read: true },
-];

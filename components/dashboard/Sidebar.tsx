@@ -17,7 +17,7 @@ const NAV_ITEMS = [
   { label: 'Overview', href: '/dashboard', icon: LayoutDashboard, exact: true },
   { label: 'My Projects', href: '/dashboard/projects', icon: FolderOpen, exact: false },
   { label: 'Donations', href: '/dashboard/donations', icon: Heart, exact: false },
-  { label: 'Settings', href: '/settings', icon: Settings, exact: false },
+  { label: 'Settings', href: '/dashboard/settings', icon: Settings, exact: false },
 ];
 
 interface SidebarProps {
