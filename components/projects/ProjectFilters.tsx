@@ -83,7 +83,7 @@ export const ProjectFilters: React.FC<ProjectFiltersProps> = ({
   };
 
   const clearAll = () => {
-    const reset = {
+    const reset: ProjectFiltersState = {
       sort: 'newest',
       verifiedOnly: false,
       status: 'all',
