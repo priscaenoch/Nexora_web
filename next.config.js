@@ -1,50 +1,10 @@
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    // Image optimization configuration
-    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '**.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
-      },
-      {
-        protocol: 'https',
-        hostname: '**.cloudinary.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '**.imgur.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '**.example.com',
-      },
+      { protocol: "https", hostname: "**" },
     ],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
-  // Enable React strict mode for better development warnings
-  reactStrictMode: true,
-  // Compiler options
-  compiler: {
-    // Remove console.log in production
-    removeConsole: process.env.NODE_ENV === 'production',
-  },
-  // Disable ESLint during build to avoid dependency conflicts
-  // ESLint should be run separately in CI/CD
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
