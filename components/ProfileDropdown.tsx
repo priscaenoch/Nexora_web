@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { User, Settings, LayoutDashboard, LogOut, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 import { useAuthStore } from '@/store/authStore';
+import { useWalletStore } from '@/store/walletStore';
+import { authApi } from '@/lib/api/auth';
 
 export default function ProfileDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +45,17 @@ export default function ProfileDropdown() {
 
   const handleLogout = async () => {
     try {
-      // Clear auth store
+      // 1. Invalidate backend session via API
+      try {
+        await authApi.logout();
+      } catch (err) {
+        console.error('Failed to invalidate session on backend:', err);
+      }
+
+      // 2. Clear wallet store state
+      useWalletStore.getState().disconnect();
+
+      // 3. Clear auth store state
       logout();
       
       // Clear any persisted auth data

@@ -1,8 +1,11 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { ChevronDown, LogOut, Copy, Check, ExternalLink } from 'lucide-react';
 import { useWalletStore } from '@/store/walletStore';
+import { useAuthStore } from '@/store/authStore';
+import { authApi } from '@/lib/api/auth';
 import { truncateAddress } from '@/lib/stellar/formatting';
 
 // Generate a unique gradient background derived from the wallet address
@@ -18,10 +21,26 @@ function getWalletGradient(address: string) {
 }
 
 export default function WalletDropdown() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { address, balance, disconnect } = useWalletStore();
+
+  const handleDisconnect = async () => {
+    setIsOpen(false);
+    try {
+      await authApi.logout();
+    } catch (err) {
+      console.error('Failed to invalidate session on backend:', err);
+    }
+    // Clear auth store state (resets JWT, user, etc.)
+    useAuthStore.getState().logout();
+    // Clear wallet store state
+    disconnect();
+    // Redirect to home page
+    router.push('/');
+  };
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -151,10 +170,7 @@ export default function WalletDropdown() {
           {/* Disconnect */}
           <button
             type="button"
-            onClick={() => {
-              disconnect();
-              setIsOpen(false);
-            }}
+            onClick={handleDisconnect}
             className="w-full flex items-center gap-3 px-4 py-2 text-xs font-medium text-destructive hover:bg-destructive/10 transition-colors duration-150 focus:outline-none focus:bg-destructive/10"
           >
             <LogOut className="w-4 h-4 shrink-0" />
