@@ -11,7 +11,39 @@ const TABS = ['About', 'Milestones', 'Donors', 'Updates', 'Contract Info'] as co
 interface CampaignDetailPageProps {
   params: { id: string };
 }
+  const campaignTitle = `Campaign ${params.id}`;
+  const campaignDescription = 'Support meaningful campaigns on StellarAid. View campaign details, milestones, and make a donation to help create positive impact.';
+  const canonicalUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://stellaraid.com'}/campaigns/${params.id}`;
 
+  return {
+    title: `${campaignTitle} | StellarAid`,
+    description: campaignDescription,
+    canonical: canonicalUrl,
+    openGraph: {
+      title: campaignTitle,
+      description: campaignDescription,
+      url: canonicalUrl,
+      siteName: 'StellarAid',
+      type: 'website',
+      images: [
+        {
+          url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://stellaraid.com'}/og-campaign.png`,
+          width: 1200,
+          height: 630,
+          alt: campaignTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: campaignTitle,
+      description: campaignDescription,
+      images: [`${process.env.NEXT_PUBLIC_APP_URL || 'https://stellaraid.com'}/og-campaign.png`],
+      creator: '@StellarAid',
+    },
+  };
+}
+const TABS = ['About', 'Milestones', 'Donors', 'Updates', 'Contract Info'] as const;
 export default function CampaignDetailPage({ params }: CampaignDetailPageProps) {
   const [campaign, setCampaign] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState(true);
