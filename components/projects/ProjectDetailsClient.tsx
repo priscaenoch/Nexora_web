@@ -28,13 +28,14 @@ import type { Project, Update } from '@/types/api';
 import { StoryTab } from './tabs/StoryTab';
 import { UpdatesTab } from './tabs/UpdatesTab';
 import { MilestonesTab } from './tabs/MilestonesTab';
+import { SmartContractTab } from './tabs/SmartContractTab';
 import { DonorsTab } from './tabs/DonorsTab';
 
 interface ProjectDetailsClientProps {
   project: Project;
 }
 
-type TabKey = 'story' | 'updates' | 'milestones' | 'donors';
+type TabKey = 'story' | 'updates' | 'milestones' | 'contract' | 'donors';
 
 function toNumber(value: string | number | undefined) {
   const numeric = Number(value || 0);
@@ -149,6 +150,7 @@ export function ProjectDetailsClient({ project }: ProjectDetailsClientProps) {
     { id: 'story', label: 'Story & Creator' },
     { id: 'updates', label: 'Updates', count: updates.length },
     { id: 'milestones', label: 'Milestones', count: projectState.milestones?.length || 0 },
+    { id: 'contract', label: 'Smart Contract', count: projectState.contract?.transactionHistory?.length },
     { id: 'donors', label: 'Donors', count: projectState.donorsList?.length || 0 },
   ];
 
@@ -266,6 +268,7 @@ export function ProjectDetailsClient({ project }: ProjectDetailsClientProps) {
               {activeTab === 'story' && <StoryTab project={projectState} />}
               {activeTab === 'updates' && <UpdatesTab updates={updates} />}
               {activeTab === 'milestones' && <MilestonesTab project={projectState} />}
+              {activeTab === 'contract' && <SmartContractTab project={projectState} />}
               {activeTab === 'donors' && <DonorsTab project={projectState} />}
             </div>
           </div>

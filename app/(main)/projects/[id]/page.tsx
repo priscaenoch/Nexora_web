@@ -116,6 +116,14 @@ function toNumber(value: string | number | undefined, fallback = 0) {
   return Number.isFinite(numeric) ? numeric : fallback;
 }
 
+function formatMoney(value: number, currencyCode = 'USD') {
+  return value.toLocaleString(undefined, {
+    style: 'currency',
+    currency: currencyCode,
+    maximumFractionDigits: 0,
+  });
+}
+
 function toStatus(value: unknown): ProjectStatus {
   if (value === 'completed' || value === 'almost-funded' || value === 'paused' || value === 'draft') {
     return value;
@@ -223,6 +231,42 @@ function createFallbackProject(id: string): Project | null {
         bio: 'Campaign organizer coordinating verified updates, local delivery, and donor reporting.',
         location: fallbackLocation[index % 4] ?? fallbackLocation[0] ?? 'Remote',
         verified: index % 2 === 0,
+      },
+      contract: {
+        contractId: `C${String(index + 1).padStart(55, '0')}`,
+        network: index % 2 === 0 ? 'testnet' : 'public',
+        sorobanAddress: `C${String(index + 1).padStart(55, '0')}`,
+        deployedAt: new Date(Date.now() - 20 * 86400000).toISOString(),
+        abiSummary: [
+          {
+            id: `${id}-contract-step-1`,
+            title: 'Initial funding hold',
+            amount: formatMoney(targetAmount * 0.25, 'USD'),
+            condition: '25% released when the first milestone is met.',
+          },
+          {
+            id: `${id}-contract-step-2`,
+            title: 'Mid-project release',
+            amount: formatMoney(targetAmount * 0.35, 'USD'),
+            condition: '35% released after halfway progress is confirmed.',
+          },
+          {
+            id: `${id}-contract-step-3`,
+            title: 'Final delivery release',
+            amount: formatMoney(targetAmount * 0.4, 'USD'),
+            condition: 'Remaining funds released once the final report is submitted.',
+          },
+        ],
+        transactionHistory: [
+          {
+            id: `${id}-tx-1`,
+            txHash: `000000000000000000000000000000000000000000000000000${index}`.slice(0, 64),
+            event: 'Contract deployed',
+            amount: formatMoney(0, 'USD'),
+            timestamp: new Date(Date.now() - 20 * 86400000).toISOString(),
+            status: 'confirmed',
+          },
+        ],
       },
       updates: [
         {

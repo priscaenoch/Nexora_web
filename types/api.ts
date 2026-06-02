@@ -1,4 +1,4 @@
-import { User } from './index';
+import { StellarNetworkType, User } from './index';
 
 export interface ApiResponse<T> {
   data: T;
@@ -67,9 +67,41 @@ export interface Milestone {
   dueDate?: string;
 }
 
+export interface ContractABISummaryItem {
+  id: string;
+  title: string;
+  amount?: string;
+  condition?: string;
+  description?: string;
+}
+
+export interface ContractTransaction {
+  id: string;
+  txHash: string;
+  event: string;
+  amount?: string;
+  timestamp?: string;
+  status?: 'pending' | 'confirmed' | 'failed';
+}
+
+export interface ProjectContract {
+  contractId: string;
+  network: StellarNetworkType;
+  sorobanAddress?: string;
+  abiSummary?: ContractABISummaryItem[];
+  transactionHistory?: ContractTransaction[];
+  deployedAt?: string;
+}
+
 export interface DonorLeaderboardEntry {
   id: string;
   donorId?: string;
+  donorName?: string;
+  walletAddress: string;
+  amount: string;
+  asset: string;
+  isAnonymous: boolean;
+  timestamp: string;
   donorName?: string;
   walletAddress: string;
   amount: string;
@@ -104,6 +136,7 @@ export interface Project {
     updates?: Update[];
     milestones?: Milestone[];
     donorsList?: DonorLeaderboardEntry[];
+    contract?: ProjectContract;
     createdAt: string;
     updatedAt: string;
 }
