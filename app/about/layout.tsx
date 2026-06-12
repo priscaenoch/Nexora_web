@@ -4,12 +4,12 @@ export const metadata: Metadata = {
   title: "About Us",
   description: "Learn about StellarAid's mission to revolutionize charitable giving through blockchain transparency. Meet our team and discover our impact stories.",
   openGraph: {
-    title: "About Us | StellarAid",
+    title: "About Us | OrbitChain",
     description: "Learn about StellarAid's mission to revolutionize charitable giving through blockchain transparency. Meet our team and discover our impact stories.",
     url: "/about",
   },
   twitter: {
-    title: "About Us | StellarAid",
+    title: "About Us | OrbitChain",
     description: "Learn about StellarAid's mission to revolutionize charitable giving through blockchain transparency. Meet our team and discover our impact stories.",
   },
 };
