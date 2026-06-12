@@ -131,7 +131,7 @@ Upload invalid files and verify error handling:
 1. **Check Cloudinary Dashboard**:
    - [ ] Log in to https://cloudinary.com/console
    - [ ] Go to Media Library
-   - [ ] See uploaded test images in `stellaraid/campaigns` folder
+   - [ ] See uploaded test images in `orbitchain/campaigns` folder
    - [ ] Images are accessible via CDN
 
 2. **Verify image optimization**:
@@ -169,7 +169,7 @@ Test image deletion endpoint:
 ```bash
 curl -X POST http://localhost:3000/api/cloudinary/delete \
   -H "Content-Type: application/json" \
-  -d '{"publicId":"stellaraid/campaigns/test_image"}'
+  -d '{"publicId":"orbitchain/campaigns/test_image"}'
 ```
 
 - [ ] Endpoint responds with 200 status

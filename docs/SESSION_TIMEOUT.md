@@ -1,6 +1,6 @@
 # Session Timeout Implementation
 
-This document describes the session timeout and automatic logout functionality implemented in the StellarAid web application.
+This document describes the session timeout and automatic logout functionality implemented in the OrbitChain web application.
 
 ## Overview
 

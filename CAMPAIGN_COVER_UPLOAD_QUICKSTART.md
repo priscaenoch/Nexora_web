@@ -36,7 +36,7 @@ The campaign cover image upload feature with Cloudinary integration is now fully
 1. Dashboard → Settings → Upload tab
 2. Click "Add upload preset"
 3. Set **Signing Mode** to "Unsigned"
-4. Name it: `stellaraid_campaigns`
+4. Name it: `orbitchain_campaigns`
 5. Save and copy the preset name
 
 ### 3. Get API Credentials
@@ -49,7 +49,7 @@ Add to `.env.local`:
 
 ```env
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
-NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=stellaraid_campaigns
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=orbitchain_campaigns
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 ```

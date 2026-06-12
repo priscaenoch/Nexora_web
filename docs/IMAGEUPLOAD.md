@@ -420,4 +420,4 @@ A complete demo page is available at `/image-upload-demo` showing all features i
 
 ## License
 
-This component is part of the StellarAid project.
+This component is part of the OrbitChain project.

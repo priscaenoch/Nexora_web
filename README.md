@@ -1,7 +1,7 @@
-# 🌟 StellarAid  
+# 🌟 OrbitChain  
 A blockchain-based crowdfunding platform built on the **Stellar Network** for transparent, borderless, and secure fundraising.
 
-StellarAid enables project creators to raise funds in **XLM** or any Stellar-based asset (USDC, NGNT, custom tokens), while donors can contribute with full on-chain transparency.
+OrbitChain enables project creators to raise funds in **XLM** or any Stellar-based asset (USDC, NGNT, custom tokens), while donors can contribute with full on-chain transparency.
 
 ## 🚀 SEO & Performance Optimizations
 
@@ -102,7 +102,7 @@ npm run dev
 
 ## 🏗️ Architecture Overview
 
-StellarAid Frontend is built with: 
+OrbitChain Frontend is built with: 
 - Next.js 14  
 - TailwindCSS  
 - Stellar JavaScript SDK  
@@ -114,8 +114,8 @@ StellarAid Frontend is built with:
 Click the **“Fork”** button in the top‑right of the GitHub repo and clone your fork:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/stellaraid.git
-cd stellaraid
+git clone https://github.com/YOUR_USERNAME/orbitchain.git
+cd orbitchain
 ````
 ### 2. Create a Branch
 ````bash
