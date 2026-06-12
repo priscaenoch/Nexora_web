@@ -21,7 +21,7 @@ export function Confetti() {
       left: Math.random() * 100 + '%',
       delay: Math.random() * 0.3,
       duration: 2.5 + Math.random() * 0.5,
-      color: colors[Math.floor(Math.random() * colors.length)],
+      color: colors[Math.floor(Math.random() * colors.length)] ?? '#FF6B6B',
     }));
     setPieces(newPieces);
   }, []);

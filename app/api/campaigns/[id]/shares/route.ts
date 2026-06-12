@@ -44,7 +44,10 @@ export async function POST(
         copy: 0,
       };
     }
-    shareStats[campaignId][body.platform]++;
+    const campaignStats = shareStats[campaignId];
+    if (campaignStats) {
+      campaignStats[body.platform] = (campaignStats[body.platform] ?? 0) + 1;
+    }
 
     return NextResponse.json<ApiResponse<ShareRecord>>(
       {

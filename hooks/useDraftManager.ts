@@ -95,7 +95,7 @@ export function useDraftManager(draftId?: string) {
 
   // Load drafts from API on mount
   useEffect(() => {
-    const loadDrafts = async () => {
+    const loadInitial = async () => {
       const apiDrafts = await fetchDraftsFromAPI();
       if (apiDrafts.length > 0) {
         setDrafts(apiDrafts);
@@ -104,7 +104,7 @@ export function useDraftManager(draftId?: string) {
         setDrafts(loadDrafts());
       }
     };
-    loadDrafts();
+    loadInitial();
   }, []);
 
   const saveDraft = useCallback(

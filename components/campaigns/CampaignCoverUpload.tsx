@@ -178,9 +178,9 @@ export const CampaignCoverUpload = React.forwardRef<
 
       if (disabled) return;
 
-      const files = e.dataTransfer.files;
-      if (files.length > 0) {
-        handleFileUpload(files[0]);
+      const file = e.dataTransfer.files.item(0);
+      if (file) {
+        handleFileUpload(file);
       }
     },
     [disabled, handleFileUpload]
@@ -197,9 +197,9 @@ export const CampaignCoverUpload = React.forwardRef<
 
   const handleFileSelect = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const files = e.currentTarget.files;
-      if (files?.length) {
-        handleFileUpload(files[0]);
+      const file = e.currentTarget.files?.item(0);
+      if (file) {
+        handleFileUpload(file);
       }
     },
     [handleFileUpload]

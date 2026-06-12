@@ -29,7 +29,12 @@ export async function GET(
     const response: CampaignShareStats = {
       campaignId,
       totalShares,
-      shares: stats,
+      shares: {
+        twitter: stats.twitter ?? 0,
+        linkedin: stats.linkedin ?? 0,
+        whatsapp: stats.whatsapp ?? 0,
+        copy: stats.copy ?? 0,
+      },
     };
 
     return NextResponse.json<ApiResponse<CampaignShareStats>>(

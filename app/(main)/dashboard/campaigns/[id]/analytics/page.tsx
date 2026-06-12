@@ -321,7 +321,7 @@ export default function CampaignAnalyticsPage() {
                       <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" horizontal={false} />
                       <XAxis type="number" tick={{ fill: '#64748b', fontSize: 12 }} axisLine={false} tickLine={false} />
                       <YAxis dataKey="region" type="category" tick={{ fill: '#334155', fontSize: 12 }} axisLine={false} tickLine={false} width={110} />
-                      <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                      <Tooltip formatter={(value) => formatCurrency(Number(value))} />
                       <Bar dataKey="amount" fill="#16a34a" radius={[8, 0, 0, 8]} />
                     </BarChart>
                   </ResponsiveContainer>

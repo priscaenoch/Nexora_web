@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button, Input } from '@/components/ui';
@@ -23,7 +23,7 @@ const schema = z.object({
     .number()
     .positive('Duration must be greater than 0')
     .max(365, 'Duration cannot exceed 365 days'),
-  isCustomDuration: z.boolean().default(false),
+  isCustomDuration: z.boolean().optional(),
   minimumDonation: z
     .number()
     .positive('Minimum donation must be greater than 0')
@@ -55,18 +55,17 @@ export const FundingConfigForm: React.FC<FundingConfigFormProps> = ({
     register,
     handleSubmit,
     watch,
-    control,
     setValue,
     formState: { errors, isValid },
   } = useForm<FundingConfigData>({
     resolver: zodResolver(schema),
-    defaultValues: initialData || {
-      goalAmount: undefined,
-      acceptedAssets: ['XLM'],
-      campaignDuration: 30,
-      isCustomDuration: false,
-      minimumDonation: undefined,
-      network: 'Mainnet',
+    defaultValues: {
+      goalAmount: initialData?.goalAmount,
+      acceptedAssets: initialData?.acceptedAssets ?? ['XLM'],
+      campaignDuration: initialData?.campaignDuration ?? 30,
+      isCustomDuration: initialData?.isCustomDuration ?? false,
+      minimumDonation: initialData?.minimumDonation,
+      network: initialData?.network ?? 'Mainnet',
     },
     mode: 'onChange',
   });
@@ -97,8 +96,10 @@ export const FundingConfigForm: React.FC<FundingConfigFormProps> = ({
     setValue('network', selectedNetwork);
   };
 
+  const onValidSubmit = (data: FundingConfigData) => onNext(data);
+
   return (
-    <form onSubmit={handleSubmit(onNext)} className="space-y-8">
+    <form onSubmit={handleSubmit(onValidSubmit)} className="space-y-8">
       <div className="space-y-6">
         {/* Goal Amount */}
         <div className="relative">
@@ -120,7 +121,7 @@ export const FundingConfigForm: React.FC<FundingConfigFormProps> = ({
             <label className="block text-sm font-medium text-gray-700">
               Accepted Assets <span className="text-red-500">*</span>
             </label>
-            <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" title="Donors can contribute in any of these assets" />
+            <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" aria-label="Donors can contribute in any of these assets" />
           </div>
           <div className="space-y-2">
             {ASSET_OPTIONS.map((asset) => (
@@ -159,7 +160,7 @@ export const FundingConfigForm: React.FC<FundingConfigFormProps> = ({
             <label className="block text-sm font-medium text-gray-700">
               Campaign Duration <span className="text-red-500">*</span>
             </label>
-            <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" title="How long the campaign will remain active" />
+            <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" aria-label="How long the campaign will remain active" />
           </div>
 
           {/* Preset durations */}
@@ -226,7 +227,7 @@ export const FundingConfigForm: React.FC<FundingConfigFormProps> = ({
             <label className="block text-sm font-medium text-gray-700">
               Blockchain Network <span className="text-red-500">*</span>
             </label>
-            <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" title="Choose which Stellar network to use" />
+            <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" aria-label="Choose which Stellar network to use" />
           </div>
           <div className="space-y-2">
             {NETWORKS.map((net) => (

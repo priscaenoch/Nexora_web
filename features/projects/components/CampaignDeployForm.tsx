@@ -214,7 +214,11 @@ export const CampaignDeployForm: React.FC<CampaignDeployFormProps> = ({
   }
 
   // Show deploying/signing screen
-  if (deployState.status === 'signing' || deployState.status === 'deploying') {
+  const inProgressStatus: 'signing' | 'deploying' = deployState.status === 'signing' || deployState.status === 'deploying'
+    ? deployState.status
+    : 'signing';
+
+  if (inProgressStatus) {
     return (
       <div className="space-y-6">
         <div className="text-center py-16">
@@ -222,12 +226,12 @@ export const CampaignDeployForm: React.FC<CampaignDeployFormProps> = ({
             <Loader className="w-8 h-8 text-blue-600 animate-spin" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            {deployState.status === 'signing'
+            {inProgressStatus === 'signing'
               ? 'Waiting for Signature'
               : 'Deploying Campaign'}
           </h2>
           <p className="text-gray-600">
-            {deployState.status === 'signing'
+            {inProgressStatus === 'signing'
               ? 'Please sign the transaction in your wallet'
               : 'Your campaign is being deployed to the Stellar blockchain...'}
           </p>
@@ -246,21 +250,19 @@ export const CampaignDeployForm: React.FC<CampaignDeployFormProps> = ({
             <div className="flex items-center gap-3">
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-semibold ${
-                  deployState.status === 'signing'
+                  inProgressStatus === 'signing'
                     ? 'bg-blue-600 text-white animate-pulse'
-                    : deployState.status === 'deploying'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-300 text-gray-700'
+                    : 'bg-blue-600 text-white'
                 }`}
               >
-                {deployState.status === 'deploying' ? '✓' : '2'}
+                {inProgressStatus === 'deploying' ? '✓' : '2'}
               </div>
               <div className="text-left">
                 <p className="text-sm font-medium text-gray-900">
-                  {deployState.status === 'signing' ? 'Wallet Signing' : 'Signed'}
+                  {inProgressStatus === 'signing' ? 'Wallet Signing' : 'Signed'}
                 </p>
                 <p className="text-xs text-gray-500">
-                  {deployState.status === 'signing'
+                  {inProgressStatus === 'signing'
                     ? 'Awaiting signature...'
                     : 'Transaction signed'}
                 </p>
@@ -269,12 +271,12 @@ export const CampaignDeployForm: React.FC<CampaignDeployFormProps> = ({
             <div className="flex items-center gap-3">
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-semibold ${
-                  deployState.status === 'deploying'
+                  inProgressStatus === 'deploying'
                     ? 'bg-blue-600 text-white animate-pulse'
                     : 'bg-gray-300 text-gray-700'
                 }`}
               >
-                {deployState.status === 'deploying' ? (
+                {inProgressStatus === 'deploying' ? (
                   <Loader className="w-4 h-4 animate-spin" />
                 ) : (
                   '3'
@@ -296,6 +298,8 @@ export const CampaignDeployForm: React.FC<CampaignDeployFormProps> = ({
   }
 
   // Show idle/initial state
+  const isIdle = deployState.status === 'idle';
+
   return (
     <div className="space-y-8">
       <div>
@@ -412,26 +416,25 @@ export const CampaignDeployForm: React.FC<CampaignDeployFormProps> = ({
           onClick={onBack}
           variant="outline"
           className="flex items-center gap-2"
-          disabled={deployState.status !== 'idle'}
+          disabled={!isIdle}
         >
           <ArrowLeft className="w-4 h-4" /> Back
         </Button>
         <Button
           onClick={handleDeploy}
-          disabled={deployState.status !== 'idle'}
+          disabled={!isIdle}
           className={`flex items-center gap-2 ${
-            deployState.status === 'idle'
+            isIdle
               ? 'bg-green-600 hover:bg-green-700 text-white'
               : 'bg-gray-400 text-white cursor-not-allowed'
           }`}
         >
-          {deployState.status === 'idle' && (
+          {isIdle && (
             <>
               🚀 Deploy Campaign
             </>
           )}
-          {(deployState.status === 'signing' ||
-            deployState.status === 'deploying') && (
+          {!isIdle && (
             <>
               <Loader className="w-4 h-4 animate-spin" />
               Deploying...

@@ -1,19 +1,18 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import { Switch } from '@/components/ui';
 import WalletConnectModal from './WalletConnectModal';
 import { useWalletStore } from '@/store/walletStore';
 import { getBaseFee, formatFee } from '@/lib/stellar/formatting';
 import { toastSuccess, toastError, toastInfo } from '@/utils/toast';
 
 const ASSETS = ['XLM', 'USDC', 'AQUA'];
-const PRESETS = [10, 25, 50];
+const PRESETS: number[] = [10, 25, 50];
 
 export default function DonationWidget() {
   const { address, connectedWallet } = useWalletStore();
   const [asset, setAsset] = useState<string>('XLM');
-  const [preset, setPreset] = useState<number | null>(PRESETS[0]);
+  const [preset, setPreset] = useState<number | null>(PRESETS[0] ?? 10);
   const [customAmount, setCustomAmount] = useState<string>('');
   const [anonymous, setAnonymous] = useState<boolean>(false);
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
@@ -44,7 +43,7 @@ export default function DonationWidget() {
       return;
     }
 
-    if (amount <= 0) {
+    if (amount <= 0 || !Number.isFinite(amount)) {
       toastError('Enter a valid donation amount');
       return;
     }
@@ -125,7 +124,21 @@ export default function DonationWidget() {
         <div>
           <label className="text-sm text-muted-foreground">Donate anonymously</label>
         </div>
-        <Switch checked={anonymous} onCheckedChange={setAnonymous} />
+        <button
+          type="button"
+          role="switch"
+          aria-checked={anonymous}
+          onClick={() => setAnonymous(!anonymous)}
+          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+            anonymous ? 'bg-primary' : 'bg-muted'
+          }`}
+        >
+          <span
+            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+              anonymous ? 'translate-x-6' : 'translate-x-1'
+            }`}
+          />
+        </button>
       </div>
 
       <div className="text-sm text-muted-foreground mb-4">Estimated network fee: <span className="font-medium text-foreground">{feeEstimate}</span></div>
@@ -141,7 +154,10 @@ export default function DonationWidget() {
         </button>
         <button
           type="button"
-          onClick={() => setPreset(null) || setCustomAmount('')}
+          onClick={() => {
+            setPreset(null);
+            setCustomAmount('');
+          }}
           className="rounded-lg border border-border px-4 py-2 text-sm font-medium bg-background"
         >
           Reset

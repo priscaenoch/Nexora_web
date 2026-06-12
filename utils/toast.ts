@@ -39,3 +39,14 @@ export const toastInfo = (message: string, title?: string) => {
     console.info('[TOAST INFO]:', message, title || '');
   }
 };
+
+/**
+ * Object-style API for use in client components.
+ * Usage: `import { toast } from '@/utils/toast'; toast.success('Copied!')`
+ */
+export const toast = {
+  success: toastSuccess,
+  error: toastError,
+  warning: toastWarning,
+  info: toastInfo,
+};
