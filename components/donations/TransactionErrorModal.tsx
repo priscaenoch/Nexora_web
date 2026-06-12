@@ -97,7 +97,7 @@ const TYPE_COPY: Record<
   },
   network: {
     title: 'Network connection issue',
-    description: 'StellarAid could not reach the donation service or Stellar network.',
+    description: 'OrbitChain could not reach the donation service or Stellar network.',
     icon: WifiOff,
     reasons: [
       'Your internet connection changed during submission.',
@@ -246,7 +246,7 @@ export function TransactionErrorModal({
     const subject = encodeURIComponent(`Donation failed: ${error.supportCode || 'no support code'}`);
     const body = encodeURIComponent(
       [
-        'Hi StellarAid support,',
+        'Hi OrbitChain support,',
         '',
         'I need help with a failed donation transaction.',
         '',
@@ -259,7 +259,7 @@ export function TransactionErrorModal({
         .join('\n')
     );
 
-    return `mailto:support@stellaraid.org?subject=${subject}&body=${body}`;
+    return `mailto:support@orbitchain.org?subject=${subject}&body=${body}`;
   }, [error]);
 
   useEffect(() => {

@@ -62,7 +62,7 @@ function shortHash(hash: string) {
 
 function buildReceiptText(receipt: DonationReceipt) {
   return [
-    'StellarAid Donation Receipt',
+    'OrbitChain Donation Receipt',
     '',
     `Donation ID: ${receipt.donationId || 'Pending confirmation'}`,
     `Project: ${receipt.projectTitle}`,
@@ -72,7 +72,7 @@ function buildReceiptText(receipt: DonationReceipt) {
     `Transaction Hash: ${receipt.transactionHash}`,
     `Explorer: ${getStellarExplorerTxUrl(receipt.transactionHash)}`,
     `Date: ${new Date(receipt.donatedAt).toLocaleString()}`,
-    `Donor: ${receipt.anonymous ? 'Anonymous' : receipt.donorName || 'StellarAid donor'}`,
+    `Donor: ${receipt.anonymous ? 'Anonymous' : receipt.donorName || 'OrbitChain donor'}`,
     receipt.networkFee ? `Network Fee: ${receipt.networkFee}` : null,
     receipt.message ? `Message: ${receipt.message}` : null,
   ]
@@ -93,7 +93,7 @@ export function TransactionSuccessModal({
   const emailedHashRef = useRef<string | null>(null);
 
   const explorerUrl = getStellarExplorerTxUrl(receipt.transactionHash);
-  const shareText = `I just donated ${formatDonationAmount(receipt.amount, receipt.assetCode)} to ${receipt.projectTitle} on StellarAid.`;
+  const shareText = `I just donated ${formatDonationAmount(receipt.amount, receipt.assetCode)} to ${receipt.projectTitle} on OrbitChain.`;
 
   const confetti = useMemo(
     () =>
@@ -145,7 +145,7 @@ export function TransactionSuccessModal({
     const link = document.createElement('a');
 
     link.href = url;
-    link.download = `stellaraid-receipt-${shortHash(receipt.transactionHash)}.txt`;
+    link.download = `orbitchain-receipt-${shortHash(receipt.transactionHash)}.txt`;
     link.click();
     URL.revokeObjectURL(url);
   }
@@ -164,7 +164,7 @@ export function TransactionSuccessModal({
     ['Amount', formatDonationAmount(receipt.amount, receipt.assetCode)],
     ['USD value', formatUsd(receipt.usdEquivalent)],
     ['Date', new Date(receipt.donatedAt).toLocaleString()],
-    ['Donor', receipt.anonymous ? 'Anonymous' : receipt.donorName || 'StellarAid donor'],
+    ['Donor', receipt.anonymous ? 'Anonymous' : receipt.donorName || 'OrbitChain donor'],
     ['Network fee', receipt.networkFee || 'Estimated at submission'],
   ];
 
