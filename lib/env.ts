@@ -1,7 +1,7 @@
 /**
  * src/lib/env.ts
  *
- * Type-safe environment variable validation for STELLARAID-WEB.
+ * Type-safe environment variable validation for ORBITCHAIN-WEB.
  * Uses @creit-tech/stellar-wallets-kit conventions.
  *
  * Usage:
