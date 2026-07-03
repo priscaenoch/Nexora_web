@@ -1,5 +1,6 @@
 'use client';
 
+import BackToTop from '@/components/BackToTop';
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -176,6 +177,7 @@ export default function CampaignsPage() {
           </>
         )}
       </main>
+      <BackToTop  />
     </div>
   );
 }

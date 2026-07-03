@@ -1,5 +1,5 @@
 "use client";
-
+import BackToTop from "@/components/BackToTop";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import {
@@ -505,6 +505,7 @@ export default function ExplorePage() {
           )}
         </section>
       </div>
+      <BackToTop/>
     </div>
   );
 }
